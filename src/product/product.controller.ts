@@ -1,7 +1,7 @@
 import { Controller, Post, Res, HttpStatus, Body, Get, Param, NotFoundException, Delete, Query, Put } from '@nestjs/common';
-import { ProductService } from "./product.service";
+import { ProductService } from './product.service';
 
-import { CreateProductDTO } from "./dto/product.dto";
+import { CreateProductDTO } from './dto/product.dto';
 
 @Controller('product')
 export class ProductController {
@@ -14,7 +14,7 @@ export class ProductController {
         const product = await this.productService.createProduct(createProductDTO);
         return res.status(HttpStatus.OK).json({
             message: 'Product Successfully Created',
-            product
+            product,
         });
     }
 
@@ -30,7 +30,7 @@ export class ProductController {
     @Get('/:productID')
     async getProduct(@Res() res, @Param('productID') productID) {
         const product = await this.productService.getProduct(productID);
-        if (!product) throw new NotFoundException('Product does not exist!');
+        if (!product) { throw new NotFoundException('Product does not exist!'); }
         return res.status(HttpStatus.OK).json(product);
     }
 
